@@ -1,11 +1,10 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Dashboard from "../components/Dashboard";
 
-export default function Page() {
+function DashboardContent() {
   const searchParams = useSearchParams();
 
   const name = searchParams.get("name") || "";
@@ -18,5 +17,13 @@ export default function Page() {
       email={email}
       course={course}
     />
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div className="p-6">Loading...</div>}>
+      <DashboardContent />
+    </Suspense>
   );
 }
